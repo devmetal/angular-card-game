@@ -1,0 +1,16 @@
+<div
+  class="text-white flex space-x-1"
+  [ngClass]="!incoming ? 'justify-end' : ''"
+>
+  @if (incoming) {
+  <div class="self-end w-[32px] h-[32px]">
+    <ng-icon size="32px" name="matSupervisedUserCircleOutline" />
+  </div>
+  }
+  <div
+    [ngClass]="incoming ? 'bg-inc-message-bg' : 'bg-message-bg'"
+    class="px-3 py-2 rounded-lg font-roboto text-sm font-medium w-message"
+  >
+    {{ message }}
+  </div>
+</div>
