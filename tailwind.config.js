@@ -20,6 +20,9 @@ module.exports = {
         'card-icon': "#ED1AFF",
         'inc-message-bg': "#4B4B4B",
         'message-bg': "#420A9D"
+      },
+      gridTemplateColumns: {
+        answers: 'repeat(4, 220px)'
       }
     },
   },

@@ -1,0 +1,10 @@
+<div class="grid grid-cols-answers gap-9 items-stretch">
+  @for (message of replies; track $index) {
+
+  <app-message-box
+    class="transition-transform hover:-translate-y-2"
+    [message]="message"
+    [incoming]="false"
+  ></app-message-box>
+  }
+</div>
