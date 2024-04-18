@@ -1,0 +1,51 @@
+<main class="flex justify-center">
+  <div class="px-4 py-2 m-8 w-1/3 bg-ui-card-bg shadow-lg rounded-md">
+    <h1
+      class="mb-2 font-roboto-condensed underline font-medium text-white text-2xl m-0 p-0"
+    >
+      Register
+    </h1>
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col space-y-4 w-full"
+    >
+      <label for="username" class="flex flex-col">
+        <div class="font-roboto font-bold">Username:</div>
+        <input
+          class="font-roboto text-lg p-1"
+          type="text"
+          id="username"
+          formControlName="username"
+        />
+      </label>
+      <label for="email" class="flex flex-col">
+        <div class="font-roboto font-bold">Email:</div>
+        <input
+          class="font-roboto text-lg p-1"
+          type="email"
+          id="email"
+          formControlName="email"
+        />
+      </label>
+      <label for="password" class="flex flex-col">
+        <div class="font-roboto font-bold">Password:</div>
+        <input
+          class="font-roboto text-lg p-1"
+          type="password"
+          id="password"
+          formControlName="password"
+        />
+      </label>
+      <div class="self-end">
+        <button
+          [disabled]="!form.valid"
+          type="submit"
+          class="text-white font-roboto font-bold p-2 rounded-md shadow-md bg-card-icon transition-all hover:shadow cursor-pointer"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+</main>
