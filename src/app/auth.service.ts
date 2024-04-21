@@ -6,7 +6,7 @@ import {
   updateProfile,
   user,
 } from '@angular/fire/auth';
-import { Observable, from } from 'rxjs';
+import { Observable, firstValueFrom, from, lastValueFrom } from 'rxjs';
 import { UserType } from './user.type';
 
 @Injectable({
@@ -18,6 +18,11 @@ export class AuthService {
   user$ = user(this.firebaseAuth);
 
   currentUserSig = signal<UserType | null | undefined>(undefined);
+
+  async isAuthenticated(): Promise<boolean> {
+    const user = await firstValueFrom(this.user$);
+    return user !== null && user !== undefined;
+  }
 
   register(
     email: string,
