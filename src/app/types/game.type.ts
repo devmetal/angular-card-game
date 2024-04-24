@@ -10,4 +10,5 @@ export type Game = {
     reply: string;
   }>;
   turn: number;
+  host: string;
 };
