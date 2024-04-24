@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProjectCardComponent } from '../project-card/project-card.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLoginRound } from '@ng-icons/material-icons/round';
+import { GameService } from '../game-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -15,4 +17,13 @@ import { matLoginRound } from '@ng-icons/material-icons/round';
     }),
   ],
 })
-export class HomePageComponent {}
+export class HomePageComponent {
+  gameService = inject(GameService);
+  router = inject(Router);
+
+  onCreateGame() {
+    this.gameService.createGame().then(() => {
+      this.router.navigateByUrl('/game');
+    });
+  }
+}

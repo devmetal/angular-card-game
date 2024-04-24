@@ -6,8 +6,8 @@ import {
   updateProfile,
   user,
 } from '@angular/fire/auth';
-import { Observable, firstValueFrom, from, lastValueFrom } from 'rxjs';
-import { UserType } from './user.type';
+import { Observable, firstValueFrom, from } from 'rxjs';
+import { UserType } from './types/user.type';
 
 @Injectable({
   providedIn: 'root',
