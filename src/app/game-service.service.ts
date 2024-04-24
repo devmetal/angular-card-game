@@ -6,22 +6,12 @@ import {
   collection,
   collectionData,
   doc,
-  getDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Game } from './types/game.type';
-import {
-  Observable,
-  filter,
-  last,
-  from,
-  mergeMap,
-  map,
-  concatMap,
-  tap,
-  takeLast,
-  switchMap,
-} from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { FirestoreGame } from './types/firestore-game.type';
 
 @Injectable({
   providedIn: 'root',
@@ -33,16 +23,18 @@ export class GameService {
   gamesColl = collection(this.firestore, 'games');
   gamesPlayersColl = collection(this.firestore, 'games_players');
 
-  getMyCurrentGame(): Observable<Game | undefined> {
+  getMyCurrentGame(): Observable<FirestoreGame | null> {
     const me = this.authService.currentUserSig()!;
 
-    return collectionData(this.gamesColl).pipe(
+    return collectionData(this.gamesColl, { idField: 'id' }).pipe(
       map((records) => {
-        return (records as Game[])
-          .filter((record) => {
-            return record.players.some((player) => player.id === me.id);
-          })
-          .at(-1);
+        return (
+          (records as FirestoreGame[])
+            .filter((record) => {
+              return record.players.some((player) => player.id === me.id);
+            })
+            .at(-1) ?? null
+        );
       })
     );
   }
@@ -78,6 +70,10 @@ export class GameService {
         });
       })
       .then(() => {});
+  }
+
+  startGame(game: FirestoreGame): Promise<void> {
+    return updateDoc(doc(this.firestore, `games/${game.id}`), { turn: 1 });
   }
 
   private genCode(): string {
