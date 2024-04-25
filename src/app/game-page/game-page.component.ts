@@ -1,8 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ProjectCardComponent } from '../project-card/project-card.component';
 import { AnswersComponent } from '../answers/answers.component';
-import { GameService } from '../game-service.service';
-import { Game } from '../types/game.type';
+import { FirebaseGameService } from '../firebase-game.service';
 import { AuthService } from '../auth.service';
 import { GameComponent } from '../game/game.component';
 import { FirestoreGame } from '../types/firestore-game.type';
@@ -15,7 +14,7 @@ import { FirestoreGame } from '../types/firestore-game.type';
   styleUrl: './game-page.component.css',
 })
 export class GamePageComponent implements OnInit {
-  gameService = inject(GameService);
+  gameService = inject(FirebaseGameService);
   authService = inject(AuthService);
 
   myGame$ = this.gameService.getMyCurrentGame();

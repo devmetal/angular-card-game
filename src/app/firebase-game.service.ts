@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { AuthService } from './auth.service';
 import {
   Firestore,
@@ -16,12 +16,17 @@ import { FirestoreGame } from './types/firestore-game.type';
 @Injectable({
   providedIn: 'root',
 })
-export class GameService {
+export class FirebaseGameService {
   authService = inject(AuthService);
   firestore = inject(Firestore);
   router = inject(Router);
+
   gamesColl = collection(this.firestore, 'games');
   gamesPlayersColl = collection(this.firestore, 'games_players');
+
+  myGame$ = this.getMyCurrentGame();
+
+  myGameSig = signal<FirestoreGame | null | undefined>(undefined);
 
   getMyCurrentGame(): Observable<FirestoreGame | null> {
     const me = this.authService.currentUserSig()!;

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ProjectCardComponent } from '../project-card/project-card.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLoginRound } from '@ng-icons/material-icons/round';
-import { GameService } from '../game-service.service';
+import { FirebaseGameService } from '../firebase-game.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
   ],
 })
 export class HomePageComponent {
-  gameService = inject(GameService);
+  gameService = inject(FirebaseGameService);
   router = inject(Router);
 
   onCreateGame() {
