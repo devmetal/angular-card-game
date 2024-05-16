@@ -9,9 +9,13 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Game } from './types/game.type';
+import { Game } from './types/game.interface';
 import { Observable, map } from 'rxjs';
-import { FirestoreGame } from './types/firestore-game.type';
+
+type GamesAndPlayers = {
+  gameId: string;
+  playerId: string;
+};
 
 @Injectable({
   providedIn: 'root',
@@ -21,20 +25,20 @@ export class FirebaseGameService {
   firestore = inject(Firestore);
   router = inject(Router);
 
-  gamesColl = collection(this.firestore, 'games');
-  gamesPlayersColl = collection(this.firestore, 'games_players');
+  gamesCollection = collection(this.firestore, 'games');
+  gamesPlayersCollection = collection(this.firestore, 'games_players');
 
-  myGame$ = this.getMyCurrentGame();
+  game$ = this.getMyCurrentGame();
 
-  myGameSig = signal<FirestoreGame | null | undefined>(undefined);
+  gameSig = signal<Game | null | undefined>(undefined);
 
-  getMyCurrentGame(): Observable<FirestoreGame | null> {
+  getMyCurrentGame(): Observable<Game | null> {
     const me = this.authService.currentUserSig()!;
 
-    return collectionData(this.gamesColl, { idField: 'id' }).pipe(
+    return collectionData(this.gamesPlayersCollection, { idField: 'id' }).pipe(
       map((records) => {
         return (
-          (records as FirestoreGame[])
+          records
             .filter((record) => {
               return record.players.some((player) => player.id === me.id);
             })
@@ -63,12 +67,12 @@ export class FirebaseGameService {
       ],
     };
 
-    return addDoc(this.gamesColl, game)
+    return addDoc(this.gamesCollection, game)
       .then((ref) => {
         const gameId = ref.id;
         const playerId = me.id;
 
-        return addDoc(this.gamesPlayersColl, {
+        return addDoc(this.gamesPlayersCollection, {
           gameId,
           playerId,
           host: true,

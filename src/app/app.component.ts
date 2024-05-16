@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
       } else {
         this.authService.currentUserSig.set(null);
       }
+      console.log('Current user');
       console.log(this.authService.currentUserSig());
     });
   }

@@ -3,9 +3,9 @@
   [ngClass]="!incoming ? 'justify-end' : ''"
 >
   @if (incoming) {
-  <div class="self-end w-[32px] h-[32px]">
-    <ng-icon size="32px" name="matSupervisedUserCircleOutline" />
-  </div>
+    <div class="self-end w-[32px] h-[32px]">
+      <ng-icon size="32px" name="matSupervisedUserCircleOutline" />
+    </div>
   }
   <app-message-box [incoming]="incoming" [message]="message" />
 </div>
